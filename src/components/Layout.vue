@@ -6,10 +6,10 @@
       </div>
       <div class="convertCon">
         <div class="imputField">
-          <div class="inputAmount"><label for="amount" class="Label">Amount</label><input class="inputField" id="amount" aria-label="Amount" name="Amount" type="text" value="1"></div>
-          <div class="inputAmount"><label for="amount" class="Label">From</label><input class="inputField currencyAuto" id="from" aria-label="Amount" name="Amount" type="text" value="USD"></div>
+          <div class="inputAmount"><label for="amount" class="Label">Amount</label><input class="inputField" id="amount" aria-label="Amount" name="Amount" type="text" placeholder="amount"></div>
+          <div class="inputAmount"><label for="amount" class="Label">From</label><input class="inputField currencyAuto" id="from" aria-label="Amount" name="Amount" type="text" placeholder="currency"></div>
           <button class="inverseButton" type="button" v-on:click="inverse"><svg aria-hidden="true" data-id="icon-exchange" viewBox="0 0 50 47" height="32px" width="30px"><path fill="currentColor" fill-rule="evenodd" d="M49.897 35.977L26.597 25v7.874H7.144v6.207h19.455v7.874zM.103 11.642l23.3 10.977v-7.874h19.454V8.538H23.402V.664z"></path></svg></button>
-          <div class="inputAmount"><label for="amount" class="Label">To</label><input class="inputField currencyAuto" id="to" aria-label="Amount" name="Amount" type="text" value="EUR"></div>
+          <div class="inputAmount"><label for="amount" class="Label">To</label><input class="inputField currencyAuto" id="to" aria-label="Amount" name="Amount" type="text" placeholder="currency"></div>
           <button class="submitEx" id="submitEx" type="submit" v-on:click="convert"><span class="glyphicon glyphicon-chevron-right"></span></button>
         </div>
         <div class="todayEx">

@@ -6,10 +6,10 @@
       </div>
       <div class="convertCon">
         <div class="imputField">
-          <div class="inputAmount"><label for="amount" class="Label">Amount</label><input class="inputField" id="amount" aria-label="Amount" name="Amount" type="text" placeholder="amount"></div>
-          <div class="inputAmount"><label for="amount" class="Label">From</label><input class="inputField currencyAuto" id="from" aria-label="Amount" name="Amount" type="text" placeholder="currency"></div>
+          <div class="inputAmount"><label for="amount" class="Label">Amount</label><input class="inputField" id="amount" aria-label="Amount" name="Amount" type="text" placeholder="amount" required @keypress="isNumber($event)"></div>
+          <div class="inputAmount"><label for="amount" class="Label">From</label><input class="inputField currencyAuto" id="from" aria-label="Amount" name="Amount" type="text" placeholder="currency" required></div>
           <button class="inverseButton" type="button" v-on:click="inverse"><svg aria-hidden="true" data-id="icon-exchange" viewBox="0 0 50 47" height="32px" width="30px"><path fill="currentColor" fill-rule="evenodd" d="M49.897 35.977L26.597 25v7.874H7.144v6.207h19.455v7.874zM.103 11.642l23.3 10.977v-7.874h19.454V8.538H23.402V.664z"></path></svg></button>
-          <div class="inputAmount"><label for="amount" class="Label">To</label><input class="inputField currencyAuto" id="to" aria-label="Amount" name="Amount" type="text" placeholder="currency"></div>
+          <div class="inputAmount"><label for="amount" class="Label">To</label><input class="inputField currencyAuto" id="to" aria-label="Amount" name="Amount" type="text" placeholder="currency" required></div>
           <button class="submitEx" id="submitEx" type="submit" v-on:click="convert"><span class="glyphicon glyphicon-chevron-right"></span></button>
         </div>
         <div class="todayEx">
@@ -91,35 +91,50 @@ export default {
     
   },
   methods: {
+    isNumber: function(evt) {
+      evt = (evt) ? evt : window.event;
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+        evt.preventDefault();;
+      } else {
+        return true;
+      }
+    },
     inverse(){
       let holdMe = $('#from').val();
       $('#from').val($('#to').val());
       $('#to').val(holdMe);
+      this.convert();
     },
     convert(){
       this.periodResults = [];
-      this.loading = true;
       this.errorMsg = null;
       let amout = $('#amount').val();
       let from = $('#from').val();
       let to = $('#to').val();
-    	axios
-        .get('https://api.currencylayer.com/convert?from='+from+'&to='+to+'&amount='+amout+'&access_key='+AccessKey)
-        .then(response => { 
-          let respHolder = response.data;
-          if (response.data.success) {
-            this.todayExchange = response.data.result;
-            this.periodData(amout,from,to);
-            this.currencyChartLabel = to;
-            this.cTo = to;
-            this.cFrom = from;
-            this.amountConverted = amout;
-          }else{
-            this.loading = false;
-            this.errorMsg = response.data.error.info;
-          }
-        });
-        // response.data.error.info
+      if (amout == "" || from == "" || to == "") {
+        this.errorMsg = "All the fields are requered! Please fill them and try again!"
+      }else if (from == to){
+        this.errorMsg = "The currencies should be different!"
+      }else{
+        this.loading = true;
+        axios
+          .get('https://api.currencylayer.com/convert?from='+from+'&to='+to+'&amount='+amout+'&access_key='+AccessKey)
+          .then(response => { 
+            let respHolder = response.data;
+            if (response.data.success) {
+              this.todayExchange = response.data.result;
+              this.periodData(amout,from,to);
+              this.currencyChartLabel = to;
+              this.cTo = to;
+              this.cFrom = from;
+              this.amountConverted = amout;
+            }else{
+              this.loading = false;
+              this.errorMsg = response.data.error.info;
+            }
+          });
+      }
     },
     async periodData(amoutParm,fromParm,toParm){
       let oneSunnyDayInThePast,oneSunnyDayInThePastFormated,tempDate,chartDate;

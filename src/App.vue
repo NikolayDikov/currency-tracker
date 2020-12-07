@@ -30,6 +30,14 @@ export default {
   position: relative;
   display: flex;
   justify-content: center;
+  background-color: rgb(181, 215, 253);
+}
+html, body {
+    margin: 0;
+    height: 100%;
+    background-image: url("./assets/layoutback.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .layoutContainer {
   width: 100%;

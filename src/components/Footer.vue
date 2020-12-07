@@ -5,7 +5,7 @@
       <div class="contactsInfo">
         <div class="contact phone"><span class="glyphicon glyphicon-earphone"></span>&nbsp; 0883 326 561</div>
         <div class="contact email"><span class="glyphicon glyphicon-envelope"></span>&nbsp; nikolai.dikov@yahoo.com</div>
-        <div class="contact git"><span class="glyphicon glyphicon-book"></span>&nbsp; <a href="https://github.com/NikolayDikov">GitHub</a></div>
+        <div class="contact git"><span class="glyphicon glyphicon-book"></span>&nbsp; <a href="https://github.com/NikolayDikov" target="_blank">GitHub</a></div>
       </div>
     </div>
   </div>
